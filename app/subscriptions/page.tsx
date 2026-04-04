@@ -67,7 +67,7 @@ export default function SubscriptionsPage() {
           <table className="w-full">
             <thead className="bg-gray-50 border-b">
               <tr>{["Merchant","Plan","Status","Period Ends","Grace Period","Failed","Actions"].map(h => (
-                <th key={h} className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">{h}</th>
+                <th key={h} className="text-left px-4 py-3 text-xs font-semibold text-gray-700 uppercase tracking-wider">{h}</th>
               ))}</tr>
             </thead>
             <tbody>
@@ -77,10 +77,10 @@ export default function SubscriptionsPage() {
                 return (
                   <tr key={s.id} className="border-b hover:bg-gray-50">
                     <td className="px-4 py-3 text-sm">
-                      <p className="font-medium">{s.merchant?.email}</p>
-                      <p className="text-xs text-gray-400">{s.merchant?.store?.name}</p>
+                      <p className="font-semibold text-gray-900">{s.merchant?.email}</p>
+                      <p className="text-xs text-gray-600 font-medium">{s.merchant?.store?.name}</p>
                     </td>
-                    <td className="px-4 py-3 text-sm">{s.merchant?.plan?.name || "—"}</td>
+                    <td className="px-4 py-3 text-sm font-medium text-gray-800">{s.merchant?.plan?.name || "—"}</td>
                     <td className="px-4 py-3">
                       <span className={"text-xs font-semibold px-2 py-1 rounded-full " + (s.status === "active" ? "bg-green-100 text-green-700" : s.status === "trial" ? "bg-blue-100 text-blue-700" : "bg-red-100 text-red-700")}>{s.status}</span>
                     </td>

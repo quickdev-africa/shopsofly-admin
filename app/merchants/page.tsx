@@ -42,7 +42,7 @@ export default function MerchantsPage() {
             <thead className="bg-gray-50 border-b">
               <tr>
                 {["Email", "Store", "Plan", "Status", "Trial Ends", "Subscription", ""].map(h => (
-                  <th key={h} className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">{h}</th>
+                  <th key={h} className="text-left px-4 py-3 text-xs font-semibold text-gray-700 uppercase tracking-wider">{h}</th>
                 ))}
               </tr>
             </thead>
@@ -55,7 +55,7 @@ export default function MerchantsPage() {
                 const trialExpired = m.trial_ends_at && new Date(m.trial_ends_at) < new Date();
                 return (
                   <tr key={m.id} className="border-b hover:bg-gray-50">
-                    <td className="px-4 py-3 text-sm font-medium">{m.email}</td>
+                    <td className="px-4 py-3 text-sm font-semibold text-gray-900">{m.email}</td>
                     <td className="px-4 py-3 text-sm">
                       <p>{m.store?.name}</p>
                       <p className="text-xs text-gray-400">{m.store?.subdomain}.shopsofly.com</p>
