@@ -25,14 +25,14 @@ export default function MerchantsPage() {
 
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center">
-      <p className="text-gray-400">Loading...</p>
+      <p className="text-gray-600">Loading...</p>
     </div>
   );
 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="bg-white border-b px-6 py-4 flex items-center gap-3">
-        <button onClick={() => router.push("/dashboard")} className="text-gray-400 hover:text-gray-600 text-sm">← Dashboard</button>
+        <button onClick={() => router.push("/dashboard")} className="text-gray-600 hover:text-gray-600 text-sm">← Dashboard</button>
         <h1 className="text-xl font-bold text-gray-900">Merchants</h1>
         <span className="bg-gray-100 text-gray-600 text-xs font-semibold px-2 py-1 rounded-full">{merchants.length}</span>
       </div>
@@ -57,10 +57,10 @@ export default function MerchantsPage() {
                   <tr key={m.id} className="border-b hover:bg-gray-50">
                     <td className="px-4 py-3 text-sm font-semibold text-gray-900">{m.email}</td>
                     <td className="px-4 py-3 text-sm">
-                      <p>{m.store?.name}</p>
-                      <p className="text-xs text-gray-400">{m.store?.subdomain}.shopsofly.com</p>
+                      <p className="font-semibold text-gray-900">{m.store?.name}</p>
+                      <p className="text-xs text-gray-500">{m.store?.subdomain}.shopsofly.com</p>
                     </td>
-                    <td className="px-4 py-3 text-sm">{m.plan?.name || "—"}</td>
+                    <td className="px-4 py-3 text-sm font-semibold text-gray-900">{m.plan?.name || "—"}</td>
                     <td className="px-4 py-3">{badge(m.status)}</td>
                     <td className={"px-4 py-3 text-xs " + (trialExpired ? "text-red-500" : "text-gray-600")}>
                       {m.trial_ends_at ? new Date(m.trial_ends_at).toLocaleDateString() : "—"}

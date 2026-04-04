@@ -53,12 +53,12 @@ export default function SubscriptionsPage() {
     finally { setActing(null); }
   }
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center"><p className="text-gray-400">Loading...</p></div>;
+  if (loading) return <div className="min-h-screen flex items-center justify-center"><p className="text-gray-600">Loading...</p></div>;
 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="bg-white border-b px-6 py-4 flex items-center gap-3">
-        <button onClick={() => router.push("/dashboard")} className="text-gray-400 hover:text-gray-600 text-sm">← Dashboard</button>
+        <button onClick={() => router.push("/dashboard")} className="text-gray-600 hover:text-gray-600 text-sm">← Dashboard</button>
         <h1 className="text-xl font-bold text-gray-900">Subscriptions</h1>
         <span className="bg-gray-100 text-gray-600 text-xs font-semibold px-2 py-1 rounded-full">{subs.length}</span>
       </div>

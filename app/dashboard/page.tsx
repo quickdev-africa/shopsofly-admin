@@ -11,7 +11,7 @@ function Sidebar({ router }: any) {
           <span className="text-xl">🛡️</span>
           <div>
             <p className="font-bold text-gray-900 text-sm">Shopsofly Admin</p>
-            <p className="text-gray-400 text-xs">QuickDev Africa</p>
+            <p className="text-gray-600 text-xs">QuickDev Africa</p>
           </div>
         </div>
       </div>
@@ -52,7 +52,7 @@ export default function DashboardPage() {
       .catch(() => router.push("/login"));
   }, [router]);
 
-  if (loading) return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-400">Loading...</p></div>;
+  if (loading) return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-600">Loading...</p></div>;
 
   const stats = [
     { icon: "🏪", label: "Total Stores", value: summary?.total_stores || 0, color: "" },
@@ -75,7 +75,7 @@ export default function DashboardPage() {
               <div key={s.label} className={"rounded-2xl border border-gray-200 p-5 shadow-sm " + (s.color || "bg-white")}>
                 <div className="text-2xl mb-2">{s.icon}</div>
                 <p className="text-3xl font-black text-gray-900">{s.value}</p>
-                <p className="text-gray-500 text-sm mt-1">{s.label}</p>
+                <p className="text-gray-700 text-sm mt-1">{s.label}</p>
               </div>
             ))}
           </div>
@@ -94,7 +94,7 @@ export default function DashboardPage() {
                 {stores.map((s: any) => (
                   <tr key={s.id} className="border-b hover:bg-gray-50 cursor-pointer" onClick={() => router.push("/stores/" + s.id)}>
                     <td className="px-4 py-3 text-sm font-medium">{s.name}</td>
-                    <td className="px-4 py-3 text-sm text-gray-500">{s.subdomain}.shopsofly.com</td>
+                    <td className="px-4 py-3 text-sm text-gray-700">{s.subdomain}.shopsofly.com</td>
                     <td className="px-4 py-3 text-sm">{s.orders_count || 0}</td>
                     <td className="px-4 py-3 text-sm text-green-600 font-medium">₦{(s.revenue || 0).toLocaleString()}</td>
                     <td className="px-4 py-3">
