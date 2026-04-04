@@ -24,5 +24,11 @@ export const api = {
   dashboard:    () => request("/dashboard/summary"),
   getStores:    (page = 1) => request(`/stores?page=${page}`),
   getStore:     (id: number) => request(`/stores/${id}`),
-  updateStore:  (id: number, data: object) => request(`/stores/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
+  updateStore:          (id: number, data: object) => request(`/stores/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
+  getMerchants:         () => request("/merchants"),
+  getMerchant:          (id: number) => request(`/merchants/${id}`),
+  getSubscriptions:     () => request("/subscriptions"),
+  markPaid:             (id: number) => request(`/subscriptions/${id}/mark_paid`, { method: "POST" }),
+  suspendSubscription:  (id: number) => request(`/subscriptions/${id}/suspend`, { method: "POST" }),
+  reactivateSubscription: (id: number) => request(`/subscriptions/${id}/reactivate`, { method: "POST" }),
 };
