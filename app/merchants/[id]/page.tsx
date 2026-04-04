@@ -84,18 +84,18 @@ export default function MerchantDetailPage() {
         <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
           <h2 className="font-bold text-gray-900 mb-4">Merchant Information</h2>
           <div className="grid grid-cols-2 gap-4 text-sm">
-            <div><p className="text-gray-500">Email</p><p className="font-medium">{merchant.email}</p></div>
-            <div><p className="text-gray-500">Phone</p><p className="font-medium">{merchant.phone || "—"}</p></div>
-            <div><p className="text-gray-500">Status</p>
+            <div><p className="text-gray-800 font-medium">Email</p><p className="font-medium">{merchant.email}</p></div>
+            <div><p className="text-gray-800 font-medium">Phone</p><p className="font-medium">{merchant.phone || "—"}</p></div>
+            <div><p className="text-gray-800 font-medium">Status</p>
               <span className={"text-xs font-semibold px-2 py-1 rounded-full " + (
                 merchant.status === "active" ? "bg-green-100 text-green-700" :
                 merchant.status === "trial" ? "bg-blue-100 text-blue-700" :
                 "bg-red-100 text-red-700"
               )}>{merchant.status}</span>
             </div>
-            <div><p className="text-gray-500">Plan</p><p className="font-medium">{merchant.plan?.name || "—"} {merchant.plan ? `— ₦${merchant.plan.price.toLocaleString()}/mo` : ""}</p></div>
-            <div><p className="text-gray-500">Trial Ends</p><p className="font-medium">{merchant.trial_ends_at ? new Date(merchant.trial_ends_at).toLocaleDateString() : "—"}</p></div>
-            <div><p className="text-gray-500">Member Since</p><p className="font-medium">{new Date(merchant.created_at).toLocaleDateString()}</p></div>
+            <div><p className="text-gray-800 font-medium">Plan</p><p className="font-medium">{merchant.plan?.name || "—"} {merchant.plan ? `— ₦${merchant.plan.price.toLocaleString()}/mo` : ""}</p></div>
+            <div><p className="text-gray-800 font-medium">Trial Ends</p><p className="font-medium">{merchant.trial_ends_at ? new Date(merchant.trial_ends_at).toLocaleDateString() : "—"}</p></div>
+            <div><p className="text-gray-800 font-medium">Member Since</p><p className="font-medium">{new Date(merchant.created_at).toLocaleDateString()}</p></div>
           </div>
         </div>
 
@@ -104,12 +104,12 @@ export default function MerchantDetailPage() {
           <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
             <h2 className="font-bold text-gray-900 mb-4">Store</h2>
             <div className="grid grid-cols-2 gap-4 text-sm">
-              <div><p className="text-gray-500">Store Name</p><p className="font-medium">{merchant.store.name}</p></div>
-              <div><p className="text-gray-500">URL</p>
+              <div><p className="text-gray-800 font-medium">Store Name</p><p className="font-medium">{merchant.store.name}</p></div>
+              <div><p className="text-gray-800 font-medium">URL</p>
                 <a href={"https://" + merchant.store.subdomain + ".shopsofly.com"} target="_blank"
                   className="text-blue-500 hover:underline font-medium">{merchant.store.subdomain}.shopsofly.com</a>
               </div>
-              <div><p className="text-gray-500">Store Status</p>
+              <div><p className="text-gray-800 font-medium">Store Status</p>
                 <span className={"text-xs font-semibold px-2 py-1 rounded-full " + (merchant.store.active ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700")}>
                   {merchant.store.active ? "Active" : "Inactive"}
                 </span>
@@ -123,14 +123,14 @@ export default function MerchantDetailPage() {
           <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
             <h2 className="font-bold text-gray-900 mb-4">Subscription</h2>
             <div className="grid grid-cols-2 gap-4 text-sm mb-6">
-              <div><p className="text-gray-500">Status</p>
+              <div><p className="text-gray-800 font-medium">Status</p>
                 <span className={"text-xs font-semibold px-2 py-1 rounded-full " + (
                   sub.status === "active" ? "bg-green-100 text-green-700" :
                   sub.status === "trial" ? "bg-blue-100 text-blue-700" :
                   "bg-red-100 text-red-700"
                 )}>{sub.status}</span>
               </div>
-              <div><p className="text-gray-500">Period Ends</p>
+              <div><p className="text-gray-800 font-medium">Period Ends</p>
                 <p className={"font-medium " + (daysLeft !== null && daysLeft < 0 ? "text-red-500" : "")}>
                   {sub.current_period_ends_at ? new Date(sub.current_period_ends_at).toLocaleDateString() : "—"}
                   {daysLeft !== null && (
@@ -138,10 +138,10 @@ export default function MerchantDetailPage() {
                   )}
                 </p>
               </div>
-              <div><p className="text-gray-500">Failed Attempts</p><p className="font-medium">{sub.failed_attempts ?? 0}</p></div>
-              <div><p className="text-gray-500">Last Charge</p><p className="font-medium">{sub.last_charge_status || "—"}</p></div>
-              <div><p className="text-gray-500">Payment Ref</p><p className="font-medium text-xs">{sub.payment_reference || "—"}</p></div>
-              <div><p className="text-gray-500">Grace Period</p>
+              <div><p className="text-gray-800 font-medium">Failed Attempts</p><p className="font-medium">{sub.failed_attempts ?? 0}</p></div>
+              <div><p className="text-gray-800 font-medium">Last Charge</p><p className="font-medium">{sub.last_charge_status || "—"}</p></div>
+              <div><p className="text-gray-800 font-medium">Payment Ref</p><p className="font-medium text-xs">{sub.payment_reference || "—"}</p></div>
+              <div><p className="text-gray-800 font-medium">Grace Period</p>
                 <p className={"font-medium " + (daysLeft !== null && daysLeft < 0 && daysLeft >= -7 ? "text-amber-500" : "")}>
                   {daysLeft !== null && daysLeft < 0 && daysLeft >= -7 ? `${7 + daysLeft} days remaining` :
                    daysLeft !== null && daysLeft < -7 ? "Grace period expired" : "N/A"}
