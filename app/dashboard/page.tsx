@@ -21,6 +21,7 @@ function Sidebar({ router }: any) {
           { label: "Stores", icon: "🏪", href: "/stores" },
           { label: "Merchants", icon: "👤", href: "/merchants" },
           { label: "Subscriptions", icon: "💳", href: "/subscriptions" },
+          { label: "Messages", icon: "📩", href: "/messages" },
         ].map((item) => (
           <button key={item.href} onClick={() => router.push(item.href)}
             className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700 text-sm font-medium w-full text-left">
