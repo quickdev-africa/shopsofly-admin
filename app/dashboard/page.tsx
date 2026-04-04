@@ -94,9 +94,9 @@ export default function DashboardPage() {
               <tbody>
                 {stores.map((s: any) => (
                   <tr key={s.id} className="border-b hover:bg-gray-50 cursor-pointer" onClick={() => router.push("/stores/" + s.id)}>
-                    <td className="px-4 py-3 text-sm font-medium">{s.name}</td>
+                    <td className="px-4 py-3 text-sm font-semibold text-gray-900">{s.name}</td>
                     <td className="px-4 py-3 text-sm text-gray-700">{s.subdomain}.shopsofly.com</td>
-                    <td className="px-4 py-3 text-sm">{s.orders_count || 0}</td>
+                    <td className="px-4 py-3 text-sm font-semibold text-gray-900">{s.orders_count || 0}</td>
                     <td className="px-4 py-3 text-sm text-green-600 font-medium">₦{(s.revenue || 0).toLocaleString()}</td>
                     <td className="px-4 py-3">
                       <span className={"text-xs font-semibold px-2 py-1 rounded-full " + (s.active !== false ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700")}>
