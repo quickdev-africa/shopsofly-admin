@@ -131,7 +131,7 @@ export default function MerchantDetailPage() {
                 )}>{sub.status}</span>
               </div>
               <div><p className="text-xs text-gray-500 uppercase tracking-wide mb-0.5">Period Ends</p>
-                <p className={"font-medium " + (daysLeft !== null && daysLeft < 0 ? "text-red-500" : "")}>
+                <p className={"font-semibold " + (daysLeft !== null && daysLeft < 0 ? "text-red-500" : "text-gray-900")}>
                   {sub.current_period_ends_at ? new Date(sub.current_period_ends_at).toLocaleDateString() : "—"}
                   {daysLeft !== null && (
                     <span className="ml-2 text-xs">({daysLeft < 0 ? `${Math.abs(daysLeft)}d overdue` : `${daysLeft}d left`})</span>
@@ -142,7 +142,7 @@ export default function MerchantDetailPage() {
               <div><p className="text-xs text-gray-500 uppercase tracking-wide mb-0.5">Last Charge</p><p className="font-semibold text-gray-900">{sub.last_charge_status || "—"}</p></div>
               <div><p className="text-xs text-gray-500 uppercase tracking-wide mb-0.5">Payment Ref</p><p className="font-medium text-xs">{sub.payment_reference || "—"}</p></div>
               <div><p className="text-xs text-gray-500 uppercase tracking-wide mb-0.5">Grace Period</p>
-                <p className={"font-medium " + (daysLeft !== null && daysLeft < 0 && daysLeft >= -7 ? "text-amber-500" : "")}>
+                <p className={"font-semibold " + (daysLeft !== null && daysLeft < 0 && daysLeft >= -7 ? "text-amber-500" : "text-gray-900")}>
                   {daysLeft !== null && daysLeft < 0 && daysLeft >= -7 ? `${7 + daysLeft} days remaining` :
                    daysLeft !== null && daysLeft < -7 ? "Grace period expired" : "N/A"}
                 </p>
