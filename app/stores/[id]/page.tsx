@@ -22,6 +22,20 @@ export default function StoreDetailPage() {
 
   function showToast(msg: string) { setToast(msg); setTimeout(() => setToast(""), 3000); }
 
+  async function handleDelete() {
+    if (!store) return;
+    if (!confirm(`PERMANENTLY DELETE "${store.name}"?\n\nThis will delete ALL data including:\n• All products\n• All orders\n• All customers\n• The subdomain ${store.subdomain}.shopsofly.com\n\nThis CANNOT be undone. Type the store name to confirm.`)) return;
+    const typed = prompt(`Type "${store.name}" to confirm deletion:`);
+    if (typed !== store.name) { showToast("Store name did not match. Deletion cancelled."); return; }
+    setActing(true);
+    try {
+      await api.deleteStore(Number(params.id));
+      showToast("Store deleted permanently.");
+      setTimeout(() => router.push("/stores"), 2000);
+    } catch { showToast("Failed to delete. Try again."); }
+    finally { setActing(false); }
+  }
+
   async function toggleActive() {
     if (!store) return;
     const action = store.active ? "deactivate" : "activate";
@@ -97,7 +111,7 @@ export default function StoreDetailPage() {
         {/* Actions */}
         <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
           <h2 className="font-bold text-gray-900 mb-4 text-lg">Actions</h2>
-          <div className="flex gap-3">
+          <div className="flex gap-3 flex-wrap">
             <button onClick={toggleActive} disabled={acting}
               className={"text-sm font-semibold px-5 py-2.5 rounded-xl disabled:opacity-60 transition-colors " + (
                 store.active !== false
@@ -110,7 +124,17 @@ export default function StoreDetailPage() {
               className="text-sm font-semibold px-5 py-2.5 rounded-xl border border-gray-300 hover:bg-gray-50 text-gray-700">
               Visit Store →
             </a>
+            <button onClick={handleDelete} disabled={acting}
+              className="text-sm font-semibold px-5 py-2.5 rounded-xl bg-gray-900 hover:bg-gray-700 text-white disabled:opacity-60 transition-colors">
+              🗑️ Delete Store Permanently
+            </button>
           </div>
+        </div>
+
+        {/* Delete warning */}
+        <div className="bg-red-50 border border-red-200 rounded-2xl p-4">
+          <p className="text-red-700 text-sm font-semibold mb-1">⚠️ Danger Zone</p>
+          <p className="text-red-600 text-xs">Permanently deleting a store removes all data including products, orders, customers, and the subdomain. This cannot be undone.</p>
         </div>
       </div>
 

@@ -25,6 +25,7 @@ export const api = {
   getStores:    (page = 1) => request(`/stores?page=${page}`),
   getStore:     (id: number) => request(`/stores/${id}`),
   updateStore:          (id: number, data: object) => request(`/stores/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
+  deleteStore:          (id: number) => request(`/stores/${id}`, { method: "DELETE" }),
   getMerchants:         () => request("/merchants"),
   getMerchant:          (id: number) => request(`/merchants/${id}`),
   getSubscriptions:     () => request("/subscriptions"),
