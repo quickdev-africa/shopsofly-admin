@@ -36,6 +36,19 @@ export default function StoreDetailPage() {
     finally { setActing(false); }
   }
 
+  async function handleProvisionDomain() {
+    if (!store) return;
+    if (!confirm(`Re-provision Cloudflare DNS + Vercel domain for ${store.subdomain}.shopsofly.com?`)) return;
+    setActing(true);
+    try {
+      const data: any = await api.provisionDomain(Number(params.id));
+      showToast(data.success ? `Domain provisioned: ${data.subdomain}` : `Failed: ${data.error}`);
+      const refreshed: any = await api.getStore(Number(params.id));
+      setStore(refreshed.store);
+    } catch { showToast("Provisioning failed. Check env vars on Koyeb."); }
+    finally { setActing(false); }
+  }
+
   async function toggleActive() {
     if (!store) return;
     const action = store.active ? "deactivate" : "activate";
@@ -119,6 +132,10 @@ export default function StoreDetailPage() {
                   : "bg-green-600 hover:bg-green-700 text-white"
               )}>
               {acting ? "Processing..." : store.active !== false ? "✕ Deactivate Store" : "✓ Activate Store"}
+            </button>
+            <button onClick={handleProvisionDomain} disabled={acting}
+              className="text-sm font-semibold px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-60 transition-colors">
+              {acting ? "Processing..." : "⟳ Re-provision Domain"}
             </button>
             <a href={"https://" + store.subdomain + ".shopsofly.com"} target="_blank"
               className="text-sm font-semibold px-5 py-2.5 rounded-xl border border-gray-300 hover:bg-gray-50 text-gray-700">

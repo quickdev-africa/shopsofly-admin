@@ -26,6 +26,7 @@ export const api = {
   getStore:     (id: number) => request(`/stores/${id}`),
   updateStore:          (id: number, data: object) => request(`/stores/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
   deleteStore:          (id: number) => request(`/stores/${id}`, { method: "DELETE" }),
+  provisionDomain:      (id: number) => request(`/stores/${id}/provision`, { method: "POST" }),
   getMerchants:         () => request("/merchants"),
   getMerchant:          (id: number) => request(`/merchants/${id}`),
   resendWelcomeEmail:   (id: number) => request(`/merchants/${id}/resend_welcome`, { method: "POST" }),
