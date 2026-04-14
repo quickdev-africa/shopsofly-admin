@@ -235,7 +235,7 @@ export default function MerchantDetailPage() {
           )}
 
           <p className="text-xs text-gray-400 mt-3">
-            Use "Correct Email" if merchant signed up with wrong email — fixes login. Then send password setup email to the new address.
+            Use &quot;Correct Email&quot; if merchant signed up with wrong email — fixes login. Then send password setup email to the new address.
           </p>
         </div>
 
