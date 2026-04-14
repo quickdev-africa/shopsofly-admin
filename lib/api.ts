@@ -28,6 +28,7 @@ export const api = {
   deleteStore:          (id: number) => request(`/stores/${id}`, { method: "DELETE" }),
   getMerchants:         () => request("/merchants"),
   getMerchant:          (id: number) => request(`/merchants/${id}`),
+  resendWelcomeEmail:   (id: number) => request(`/merchants/${id}/resend_welcome`, { method: "POST" }),
   getSubscriptions:     () => request("/subscriptions"),
   markPaid:             (id: number) => request(`/subscriptions/${id}/mark_paid`, { method: "POST" }),
   suspendSubscription:  (id: number) => request(`/subscriptions/${id}/suspend`, { method: "POST" }),

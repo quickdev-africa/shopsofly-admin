@@ -50,6 +50,16 @@ export default function MerchantDetailPage() {
     finally { setActing(false); }
   }
 
+  async function handleResendWelcome() {
+    if (!confirm(`Resend password setup email to ${merchant?.email}?`)) return;
+    setActing(true);
+    try {
+      await api.resendWelcomeEmail(Number(params.id));
+      showToast(`Password setup email sent to ${merchant?.email}`);
+    } catch { showToast("Failed to send email. Try again."); }
+    finally { setActing(false); }
+  }
+
   async function handleReactivate() {
     if (!merchant?.subscription) return;
     setActing(true);
@@ -97,6 +107,18 @@ export default function MerchantDetailPage() {
             <div><p className="text-xs text-gray-500 uppercase tracking-wide mb-0.5">Trial Ends</p><p className="font-semibold text-gray-900">{merchant.trial_ends_at ? new Date(merchant.trial_ends_at).toLocaleDateString() : "—"}</p></div>
             <div><p className="text-xs text-gray-500 uppercase tracking-wide mb-0.5">Member Since</p><p className="font-semibold text-gray-900">{new Date(merchant.created_at).toLocaleDateString()}</p></div>
           </div>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+          <h2 className="font-bold text-gray-900 mb-4">Quick Actions</h2>
+          <div className="flex gap-3 flex-wrap">
+            <button onClick={handleResendWelcome} disabled={acting}
+              className="bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-4 py-2 rounded-xl disabled:opacity-60">
+              ✉ Send Password Setup Email
+            </button>
+          </div>
+          <p className="text-xs text-gray-400 mt-2">Use this if the merchant never received their welcome email or cannot log in.</p>
         </div>
 
         {/* Store Info */}
