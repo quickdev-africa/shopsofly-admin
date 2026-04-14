@@ -77,7 +77,7 @@ export default function MerchantDetailPage() {
     try {
       await api.resendWelcomeEmail(Number(params.id));
       showToast(`Password setup email sent to ${merchant?.email}`);
-    } catch { showToast("Failed to send email. Try again."); }
+    } catch (err: any) { showToast("Failed: " + (err?.message || "Try again.")); }
     finally { setActing(false); }
   }
 
@@ -93,7 +93,7 @@ export default function MerchantDetailPage() {
       setMerchant(data.merchant);
       setNewEmail("");
       setShowEmailForm(false);
-    } catch (err: any) { showToast("Failed to update email. " + (err?.message || "")); }
+    } catch (err: any) { showToast("Failed: " + (err?.message || "Try again.")); }
     finally { setActing(false); }
   }
 
@@ -109,7 +109,7 @@ export default function MerchantDetailPage() {
       setPaymentAmount("");
       setPaymentNote("");
       setShowPaymentForm(false);
-    } catch { showToast("Failed to record payment. Try again."); }
+    } catch (err: any) { showToast("Failed: " + (err?.message || "Try again.")); }
     finally { setActing(false); }
   }
 
