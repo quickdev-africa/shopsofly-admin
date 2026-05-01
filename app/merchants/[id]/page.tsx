@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import AdminLayout from "@/components/AdminLayout";
 import { useRouter, useParams } from "next/navigation";
 import { api } from "@/lib/api";
 
@@ -121,7 +122,7 @@ export default function MerchantDetailPage() {
     Math.round((new Date(sub.current_period_ends_at).getTime() - Date.now()) / 86400000) : null;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <AdminLayout>
       <div className="bg-white border-b px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <button onClick={() => router.push("/merchants")} className="text-gray-400 hover:text-gray-600">← Back</button>
@@ -312,6 +313,6 @@ export default function MerchantDetailPage() {
           {toast}
         </div>
       )}
-    </div>
+    </AdminLayout>
   );
 }

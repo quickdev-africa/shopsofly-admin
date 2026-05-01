@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import AdminLayout from "@/components/AdminLayout";
 import { useRouter, useParams } from "next/navigation";
 import { api } from "@/lib/api";
 
@@ -90,7 +91,7 @@ export default function StoreDetailPage() {
   if (!store) return null;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <AdminLayout>
       <div className="bg-white border-b px-6 py-4 flex items-center gap-3">
         <button onClick={() => router.push("/stores")} className="text-gray-400 hover:text-gray-600 text-sm">← Stores</button>
         <h1 className="text-xl font-bold text-gray-900">Store Detail</h1>
@@ -284,6 +285,6 @@ export default function StoreDetailPage() {
           {toast}
         </div>
       )}
-    </div>
+    </AdminLayout>
   );
 }

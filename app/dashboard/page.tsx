@@ -1,43 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
+import AdminLayout from "@/components/AdminLayout";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
-
-function Sidebar({ router }: any) {
-  return (
-    <div className="w-56 bg-white border-r border-gray-200 flex flex-col fixed h-full z-10">
-      <div className="px-4 py-5 border-b border-gray-200">
-        <div className="flex items-center gap-2">
-          <span className="text-xl">🛡️</span>
-          <div>
-            <p className="font-bold text-gray-900 text-sm">Shopsofly Admin</p>
-            <p className="text-gray-600 text-xs">QuickDev Africa</p>
-          </div>
-        </div>
-      </div>
-      <nav className="flex-1 px-3 py-4 space-y-1">
-        {[
-          { label: "Dashboard", icon: "📊", href: "/dashboard" },
-          { label: "Stores", icon: "🏪", href: "/stores" },
-          { label: "Merchants", icon: "👤", href: "/merchants" },
-          { label: "Subscriptions", icon: "💳", href: "/subscriptions" },
-          { label: "Messages", icon: "📩", href: "/messages" },
-        ].map((item) => (
-          <button key={item.href} onClick={() => router.push(item.href)}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700 text-sm font-medium w-full text-left">
-            <span>{item.icon}</span><span>{item.label}</span>
-          </button>
-        ))}
-      </nav>
-      <div className="px-3 py-4 border-t border-gray-200">
-        <button onClick={() => { localStorage.removeItem("operator_token"); router.push("/login"); }}
-          className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-red-50 text-red-500 text-sm font-medium w-full">
-          <span>🚪</span><span>Sign Out</span>
-        </button>
-      </div>
-    </div>
-  );
-}
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -66,9 +31,8 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
-      <Sidebar router={router} />
-      <div className="ml-56 flex-1 p-6">
+    <AdminLayout>
+      <div className="p-6">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-2xl font-bold text-gray-900 mb-6">Platform Overview</h1>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
@@ -110,6 +74,6 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
-    </div>
+    </AdminLayout>
   );
 }

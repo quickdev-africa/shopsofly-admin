@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import AdminLayout from "@/components/AdminLayout";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 
@@ -24,7 +25,7 @@ export default function StoresPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <AdminLayout>
       <div className="bg-white border-b px-6 py-4 flex items-center gap-3">
         <button onClick={() => router.push("/dashboard")} className="text-gray-400 hover:text-gray-600 text-sm">← Dashboard</button>
         <h1 className="text-xl font-bold text-gray-900">All Stores</h1>
@@ -73,6 +74,6 @@ export default function StoresPage() {
           </table>
         </div>
       </div>
-    </div>
+    </AdminLayout>
   );
 }

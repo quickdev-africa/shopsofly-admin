@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import AdminLayout from "@/components/AdminLayout";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 
@@ -56,7 +57,7 @@ export default function SubscriptionsPage() {
   if (loading) return <div className="min-h-screen flex items-center justify-center"><p className="text-gray-600">Loading...</p></div>;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <AdminLayout>
       <div className="bg-white border-b px-6 py-4 flex items-center gap-3">
         <button onClick={() => router.push("/dashboard")} className="text-gray-600 hover:text-gray-600 text-sm">← Dashboard</button>
         <h1 className="text-xl font-bold text-gray-900">Subscriptions</h1>
@@ -120,6 +121,6 @@ export default function SubscriptionsPage() {
         </div>
       </div>
       {toast && <div className="fixed bottom-6 right-6 bg-gray-900 text-white px-5 py-3 rounded-xl shadow-lg text-sm z-50">{toast}</div>}
-    </div>
+    </AdminLayout>
   );
 }
