@@ -14,10 +14,6 @@ export default function StoreDetailPage() {
   const [upgradePlan, setUpgradePlan] = useState("Standard");
   const [upgradeDuration, setUpgradeDuration] = useState(1);
   const [upgrading, setUpgrading] = useState(false);
-  const [showUpgrade, setShowUpgrade] = useState(false);
-  const [upgradePlan, setUpgradePlan] = useState("Standard");
-  const [upgradeDuration, setUpgradeDuration] = useState(1);
-  const [upgrading, setUpgrading] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("operator_token");
