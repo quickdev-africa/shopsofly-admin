@@ -10,6 +10,14 @@ export default function StoreDetailPage() {
   const [loading, setLoading] = useState(true);
   const [acting, setActing] = useState(false);
   const [toast, setToast] = useState("");
+  const [showUpgrade, setShowUpgrade] = useState(false);
+  const [upgradePlan, setUpgradePlan] = useState("Standard");
+  const [upgradeDuration, setUpgradeDuration] = useState(1);
+  const [upgrading, setUpgrading] = useState(false);
+  const [showUpgrade, setShowUpgrade] = useState(false);
+  const [upgradePlan, setUpgradePlan] = useState("Standard");
+  const [upgradeDuration, setUpgradeDuration] = useState(1);
+  const [upgrading, setUpgrading] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("operator_token");
@@ -47,6 +55,37 @@ export default function StoreDetailPage() {
       setStore(refreshed.store);
     } catch { showToast("Provisioning failed. Check env vars on Koyeb."); }
     finally { setActing(false); }
+  }
+
+  async function handleUpgrade() {
+    if (!store?.merchant?.id) { showToast("No merchant found for this store."); return; }
+    const subId = store?.merchant?.subscription_id;
+    if (!subId) { showToast("No subscription found. Check subscriptions page."); return; }
+    if (!confirm(`Upgrade to ${upgradePlan} for ${upgradeDuration} month(s)?`)) return;
+    setUpgrading(true);
+    try {
+      const data: any = await api.upgradeSubscription(subId, upgradePlan, upgradeDuration);
+      showToast(data.message || "Upgraded successfully!");
+      setShowUpgrade(false);
+      const refreshed: any = await api.getStore(Number(params.id));
+      setStore(refreshed.store);
+    } catch { showToast("Upgrade failed. Try again."); }
+    finally { setUpgrading(false); }
+  }
+
+  async function handleUpgrade() {
+    const subId = store?.merchant?.subscription_id;
+    if (!subId) { showToast("No subscription found for this store."); return; }
+    if (!confirm(`Upgrade to ${upgradePlan} for ${upgradeDuration} month(s)?`)) return;
+    setUpgrading(true);
+    try {
+      const data: any = await api.upgradeSubscription(subId, upgradePlan, upgradeDuration);
+      showToast(data.message || "Upgraded successfully!");
+      setShowUpgrade(false);
+      const refreshed: any = await api.getStore(Number(params.id));
+      setStore(refreshed.store);
+    } catch { showToast("Upgrade failed. Try again."); }
+    finally { setUpgrading(false); }
   }
 
   async function toggleActive() {
@@ -146,6 +185,111 @@ export default function StoreDetailPage() {
               🗑️ Delete Store Permanently
             </button>
           </div>
+        </div>
+
+        {/* Upgrade Plan */}
+        <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-bold text-gray-900 text-lg">Subscription & Plan</h2>
+            <button onClick={() => setShowUpgrade(!showUpgrade)}
+              className="text-sm font-semibold px-4 py-2 rounded-xl bg-[#4A7C59] hover:bg-[#2D4A32] text-white">
+              {showUpgrade ? "Cancel" : "⬆ Upgrade Plan"}
+            </button>
+          </div>
+          <div className="grid grid-cols-2 gap-4 text-sm mb-4">
+            <div>
+              <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">Current Plan</p>
+              <p className="font-semibold text-gray-900">{store.merchant?.plan || "—"}</p>
+            </div>
+            <div>
+              <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">Status</p>
+              <p className="font-semibold text-gray-900">{store.merchant?.status || "—"}</p>
+            </div>
+          </div>
+          {showUpgrade && (
+            <div className="border-t border-gray-100 pt-4 space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">Select Plan</label>
+                <div className="grid grid-cols-3 gap-2">
+                  {["Basic", "Standard", "Trial"].map(p => (
+                    <button key={p} onClick={() => setUpgradePlan(p)}
+                      className={"py-2.5 rounded-xl text-sm font-semibold border-2 transition-all " + (upgradePlan === p ? "border-[#4A7C59] bg-[#E8F0E9] text-[#4A7C59]" : "border-gray-200 text-gray-600 hover:border-gray-300")}>
+                      {p}
+                      <div className="text-xs font-normal mt-0.5">{p === "Basic" ? "₦5,500/mo" : p === "Standard" ? "₦12,500/mo" : "Free"}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">Duration</label>
+                <div className="grid grid-cols-4 gap-2">
+                  {[{m:1,l:"1 Month"},{m:3,l:"3 Months"},{m:6,l:"6 Months"},{m:12,l:"1 Year"}].map(d => (
+                    <button key={d.m} onClick={() => setUpgradeDuration(d.m)}
+                      className={"py-2.5 rounded-xl text-sm font-semibold border-2 transition-all " + (upgradeDuration === d.m ? "border-[#F97316] bg-orange-50 text-[#F97316]" : "border-gray-200 text-gray-600 hover:border-gray-300")}>
+                      {d.l}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="bg-gray-50 rounded-xl p-3 text-sm">
+                <p className="font-semibold text-gray-900">Summary: {upgradePlan} plan for {upgradeDuration} month(s)</p>
+                <p className="text-gray-500 text-xs mt-1">This will immediately activate the plan and extend the subscription period.</p>
+              </div>
+              <button onClick={handleUpgrade} disabled={upgrading}
+                className="w-full bg-[#F97316] hover:bg-orange-600 text-white font-bold py-3 rounded-xl text-sm disabled:opacity-60">
+                {upgrading ? "Upgrading..." : `Confirm Upgrade to ${upgradePlan} — ${upgradeDuration} Month(s)`}
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Upgrade Plan */}
+        <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="font-bold text-gray-900 text-lg">Subscription & Plan</h2>
+              <p className="text-sm text-gray-500 mt-1">Current: <strong>{store.merchant?.plan || "—"}</strong> · Status: <strong>{store.merchant?.status || "—"}</strong></p>
+            </div>
+            <button onClick={() => setShowUpgrade(!showUpgrade)}
+              className="text-sm font-semibold px-4 py-2 rounded-xl bg-[#4A7C59] hover:bg-[#2D4A32] text-white transition-colors">
+              {showUpgrade ? "Cancel" : "⬆ Upgrade Plan"}
+            </button>
+          </div>
+          {showUpgrade && (
+            <div className="border-t border-gray-100 pt-5 space-y-5">
+              <div>
+                <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">Select Plan</label>
+                <div className="grid grid-cols-3 gap-2">
+                  {[{n:"Basic",p:"₦5,500/mo"},{n:"Standard",p:"₦12,500/mo"},{n:"Trial",p:"Free"}].map(pl => (
+                    <button key={pl.n} onClick={() => setUpgradePlan(pl.n)}
+                      className={"py-3 rounded-xl text-sm font-semibold border-2 transition-all " + (upgradePlan === pl.n ? "border-[#4A7C59] bg-[#E8F0E9] text-[#4A7C59]" : "border-gray-200 text-gray-600 hover:border-gray-300")}>
+                      {pl.n}
+                      <div className="text-xs font-normal mt-0.5 opacity-70">{pl.p}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">Duration</label>
+                <div className="grid grid-cols-4 gap-2">
+                  {[{m:1,l:"1 Month"},{m:3,l:"3 Months"},{m:6,l:"6 Months"},{m:12,l:"1 Year"}].map(d => (
+                    <button key={d.m} onClick={() => setUpgradeDuration(d.m)}
+                      className={"py-3 rounded-xl text-sm font-semibold border-2 transition-all " + (upgradeDuration === d.m ? "border-[#F97316] bg-orange-50 text-[#F97316]" : "border-gray-200 text-gray-600 hover:border-gray-300")}>
+                      {d.l}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 text-sm">
+                <p className="font-semibold text-blue-900">Summary: {upgradePlan} plan · {upgradeDuration} month(s)</p>
+                <p className="text-blue-600 text-xs mt-1">This immediately activates the plan and extends the subscription period.</p>
+              </div>
+              <button onClick={handleUpgrade} disabled={upgrading}
+                className="w-full bg-[#F97316] hover:bg-orange-600 text-white font-bold py-3.5 rounded-xl text-sm disabled:opacity-60 transition-colors">
+                {upgrading ? "Upgrading..." : `Confirm — Upgrade to ${upgradePlan} for ${upgradeDuration} Month(s)`}
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Delete warning */}

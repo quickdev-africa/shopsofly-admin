@@ -43,6 +43,7 @@ export const api = {
   markPaid:             (id: number) => request(`/subscriptions/${id}/mark_paid`, { method: "POST" }),
   suspendSubscription:  (id: number) => request(`/subscriptions/${id}/suspend`, { method: "POST" }),
   reactivateSubscription: (id: number) => request(`/subscriptions/${id}/reactivate`, { method: "POST" }),
+  upgradeSubscription: (id: number, plan: string, duration_months: number) => request(`/subscriptions/${id}/upgrade`, { method: "POST", body: JSON.stringify({ plan, duration_months }) }),
   getDemoBookings:        () => request("/demo_bookings"),
   updateDemoBooking:      (id: number, data: object) => request(`/demo_bookings/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
 };
