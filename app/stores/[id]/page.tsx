@@ -54,22 +54,6 @@ export default function StoreDetailPage() {
   }
 
   async function handleUpgrade() {
-    if (!store?.merchant?.id) { showToast("No merchant found for this store."); return; }
-    const subId = store?.merchant?.subscription_id;
-    if (!subId) { showToast("No subscription found. Check subscriptions page."); return; }
-    if (!confirm(`Upgrade to ${upgradePlan} for ${upgradeDuration} month(s)?`)) return;
-    setUpgrading(true);
-    try {
-      const data: any = await api.upgradeSubscription(subId, upgradePlan, upgradeDuration);
-      showToast(data.message || "Upgraded successfully!");
-      setShowUpgrade(false);
-      const refreshed: any = await api.getStore(Number(params.id));
-      setStore(refreshed.store);
-    } catch { showToast("Upgrade failed. Try again."); }
-    finally { setUpgrading(false); }
-  }
-
-  async function handleUpgrade() {
     const subId = store?.merchant?.subscription_id;
     if (!subId) { showToast("No subscription found for this store."); return; }
     if (!confirm(`Upgrade to ${upgradePlan} for ${upgradeDuration} month(s)?`)) return;
